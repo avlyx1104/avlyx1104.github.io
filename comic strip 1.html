@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://fmscmd.com/xdlab/imda/iframe-template.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+        <!-- change the title accordingly-->
+        <title>ashley's intdes website</title>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic Strip 1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightgray;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #283953;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button:hover {
+            background-color: pink;
+        }
+
+        .comic-strip {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 90%;
+            max-width: 900px;
+        }
+
+        .comic-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 300px;
+            background-color: papayawhip;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.6s ease;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .comic-box:hover {
+            transform: scale(1.05);
+        }
+
+        .comic-box span {
+            display: none;
+            color: #283953;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .box-1 {
+            background-color: lightblue;
+        }
+
+        .box-2 {
+            background-color: pink;
+        }
+
+        .box-3 {
+            background-color: paleturquoise;
+        }
+
+        /* Spinning animation */
+        .spin {
+            animation: spin 0.6s ease-in-out;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotateY(0deg);
+            }
+            50% {
+                transform: rotateY(180deg);
+            }
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+
+        .show-definition span {
+            display: block;
+        }
+
+        /* Next button */
+        .next-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #283953;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .next-button:hover {
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back button -->
+    <a href="comic.html" class="back-button">Back to First Page</a>
+
+    <div class="comic-strip">
+        <!-- Box 1 -->
+        <div class="comic-box box-1" id="box1">
+            <span>1. Artificial Intelligence (AI): A field of computer science that enables machines to perform tasks that typically require human intelligence, such as learning, problem-solving, and decision-making.</span>
+            1
+        </div>
+        <!-- Box 2 -->
+        <div class="comic-box box-2" id="box2">
+            <span>2. Generative AI: A subset of AI that uses models like neural networks to generate new content such as text, images, and music, based on patterns learned from existing data.</span>
+            2
+        </div>
+        <!-- Box 3 -->
+        <div class="comic-box box-3" id="box3">
+            <span>3. Machine Learning: A branch of AI where algorithms learn and improve from data without being explicitly programmed for every task.</span>
+            3
+        </div>
+    </div>
+
+    <!-- Next button -->
+    <a href="comic strip 2.html" class="next-button">Next</a>
+
+    <script>
+        // Function to handle the box click
+        function handleClick(boxId) {
+            const box = document.getElementById(boxId);
+
+            // Add spin animation
+            box.classList.add('spin');
+
+            // Show the definition after the animation ends
+            box.addEventListener('animationend', () => {
+                box.classList.remove('spin');
+                box.classList.add('show-definition');
+            }, { once: true });
+        }
+
+        // Attach click events to each box
+        document.getElementById('box1').addEventListener('click', () => handleClick('box1'));
+        document.getElementById('box2').addEventListener('click', () => handleClick('box2'));
+        document.getElementById('box3').addEventListener('click', () => handleClick('box3'));
+    </script>
+</body>
+</html>

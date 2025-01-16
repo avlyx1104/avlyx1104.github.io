@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://fmscmd.com/xdlab/imda/iframe-template.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+        <!-- change the title accordingly-->
+        <title>ashley's intdes website</title>
+        <!DOCTYPE html>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic Strip 4 - Good vs Bad Prompts in Generative AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        h1 {
+            color: #283953;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            position: relative;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 75%;
+            font-size: 16px;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer; /* Enable clicking on the messages */
+        }
+
+        .user {
+            align-self: flex-end;
+            background-color: #4E9F3D;
+            color: white;
+            border-top-right-radius: 0;
+        }
+
+        .ai {
+            align-self: flex-start;
+            background-color: #E0E0E0;
+            color: #333;
+            border-top-left-radius: 0;
+        }
+
+        .message span {
+            font-weight: bold;
+            color: #2C3E50;
+        }
+
+        .message::before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            display: block;
+        }
+
+        .user::before {
+            top: 0;
+            right: -10px;
+            border-bottom: 10px solid #4E9F3D;
+        }
+
+        .ai::before {
+            top: 0;
+            left: -10px;
+            border-bottom: 10px solid #E0E0E0;
+        }
+
+        .explanation-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none; /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .explanation-box {
+            background-color: white;
+            padding: 20px;
+            max-width: 600px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .explanation-box h2 {
+            color: #283953;
+        }
+
+        .explanation-box p {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .close-button {
+            background-color: #4E9F3D;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .close-button:hover {
+            background-color: #2c8c29;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #283953;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back-button:hover {
+            background-color: pink;
+        }
+
+        .next-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #283953;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .next-button:hover {
+            background-color: pink;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Back button -->
+    <a href="comic.html" class="back-button">Back to First Page</a>
+
+    <!-- Next button -->
+    <a href="comic strip 5.html" class="next-button">Next</a>
+
+    <h1>Good vs Bad Prompts in Generative AI</h1>
+
+    <div class="chat-container">
+        <!-- User Message 1: Bad Prompt -->
+        <div class="message user" id="badPrompt">
+            <span>User:</span> <i>Write a story.</i>
+        </div>
+
+        <!-- AI Message 1: Response to Bad Prompt -->
+        <div class="message ai">
+            <span>AI:</span> <i>Sure, here's a story: Once upon a time, there was a character...</i>
+        </div>
+
+        <!-- User Message 2: Good Prompt -->
+        <div class="message user" id="goodPrompt">
+            <span>User:</span> <i>Write a 200-word story about a dragon who learns to trust humans, focusing on emotions and character development.</i>
+        </div>
+
+        <!-- AI Message 2: Response to Good Prompt -->
+        <div class="message ai">
+            <span>AI:</span> <i>Once upon a time, a fierce dragon named Drakron lived alone in the mountains. His heart was full of anger and distrust...</i>
+        </div>
+    </div>
+
+    <!-- Explanation Overlay for Bad Prompt -->
+    <div class="explanation-overlay" id="badPromptExplanation">
+        <div class="explanation-box">
+            <h2>Why is this a bad prompt?</h2>
+            <p>This prompt is too vague! Simply asking to "write a story" doesn't provide enough direction for the AI to create a meaningful or interesting response. Specific details about the type of story, the characters, or the setting help generate better results.</p>
+            <button class="close-button" onclick="closeExplanation('badPromptExplanation')">Close</button>
+        </div>
+    </div>
+
+    <!-- Explanation Overlay for Good Prompt -->
+    <div class="explanation-overlay" id="goodPromptExplanation">
+        <div class="explanation-box">
+            <h2>Why is this a better prompt?</h2>
+            <p>This prompt is clear and specific! It provides a clear character (the dragon), a theme (trusting humans), and a focus on emotions and character development. This gives the AI enough context to create a much richer and more engaging story.</p>
+            <button class="close-button" onclick="closeExplanation('goodPromptExplanation')">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to show the explanation overlay
+        function showExplanation(explanationId) {
+            const explanationOverlay = document.getElementById(explanationId);
+            explanationOverlay.style.display = 'flex';
+            setTimeout(() => {
+                explanationOverlay.style.opacity = '1';
+            }, 10);
+        }
+
+        // Function to close the explanation overlay
+        function closeExplanation(explanationId) {
+            const explanationOverlay = document.getElementById(explanationId);
+            explanationOverlay.style.opacity = '0';
+            setTimeout(() => {
+                explanationOverlay.style.display = 'none';
+            }, 500);
+        }
+
+        // Attach click events to the messages
+        document.getElementById('badPrompt').addEventListener('click', () => showExplanation('badPromptExplanation'));
+        document.getElementById('goodPrompt').addEventListener('click', () => showExplanation('goodPromptExplanation'));
+    </script>
+</body>
+</html>

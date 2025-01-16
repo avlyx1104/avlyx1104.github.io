@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://fmscmd.com/xdlab/imda/iframe-template.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+        <!-- change the title accordingly-->
+        <title>ashley's intdes website</title>
+        <!DOCTYPE html>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Comic Strip 2</title>
+            <style>
+                body {
+                    font-family: Helvetica, Arial, sans-serif;
+                    background-color: #f0f8ff;
+                    margin: 0;
+                    padding: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    overflow: hidden;
+                    position: relative;
+                }
+        
+                .igloo {
+                    width: 200px;
+                    height: 200px;
+                    background-image: url('igloo.png'); /* Replace with your igloo image */
+                    background-size: cover;
+                    background-position: center;
+                    cursor: pointer;
+                    transition: transform 0.3s ease;
+                }
+        
+                .igloo:hover {
+                    transform: scale(1.1); /* Slight zoom on hover */
+                }
+        
+                .freeze-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+                    color: white;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    font-size: 32px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 0.5s ease;
+                    z-index: 10;
+                }
+        
+                .freeze-active {
+                    opacity: 1;
+                    pointer-events: all;
+                }
+        
+                .what-happened-button {
+                    margin-top: 20px;
+                    background-color: transparent;
+                    color: white;
+                    font-size: 18px;
+                    font-weight: bold;
+                    padding: 10px 20px;
+                    border: 2px solid white;
+                    border-radius: 30px;
+                    cursor: pointer;
+                    text-transform: uppercase;
+                    transition: background-color 0.3s ease, color 0.3s ease;
+                }
+        
+                .what-happened-button:hover {
+                    background-color: white;
+                    color: black;
+                }
+        
+                .explanation-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(255, 255, 255, 0.9); /* Opaque white */
+                    color: #283953;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    padding: 20px;
+                    font-size: 20px;
+                    font-weight: normal;
+                    opacity: 0;
+                    pointer-events: none;
+                    z-index: 20;
+                }
+        
+                .explanation-active {
+                    opacity: 1;
+                    pointer-events: all;
+                }
+        
+                .typewriter {
+                    width: 80%;
+                    margin: auto;
+                    border: none;
+                    white-space: pre-wrap;
+                    overflow: hidden;
+                    font-family: 'Courier New', Courier, monospace;
+                }
+        
+                .close-overlay {
+                    margin-top: 20px;
+                    padding: 10px 20px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    border: none;
+                    background-color: #283953;
+                    color: white;
+                    border-radius: 20px;
+                    cursor: pointer;
+                }
+
+                .back-button {
+                    position: absolute;
+                    top: 20px;
+                    left: 20px;
+                    background-color: #283953;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 10px 15px;
+                    cursor: pointer;
+                    text-decoration: none;
+                    font-size: 16px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                }
+
+                .back-button:hover {
+                    background-color: pink;
+                }
+
+                .next-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #283953;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .next-button:hover {
+            background-color: pink;
+        }
+            </style>
+        </head>
+        <body>
+            <!-- Igloo Image -->
+            <div class="igloo" id="igloo"></div>
+        
+            <!-- Freeze Overlay -->
+            <div class="freeze-overlay" id="freeze-overlay">
+                <div>
+                    OH NO! YOU HAVE BEEN CAUGHT PLAGIARISING!
+                </div>
+                <!-- What Happened Button -->
+                <button class="what-happened-button" id="what-happened-button">
+                    What Happened?
+                </button>
+            </div>
+        
+            <!-- Explanation Overlay -->
+            <div class="explanation-overlay" id="explanation-overlay">
+                <div>
+                    <div class="typewriter" id="typewriter">
+                        <!-- Typewriter text will be injected here -->
+                    </div>
+                    <button class="close-overlay" id="close-overlay">
+                        Got it!
+                    </button>
+                </div>
+            </div>
+        
+            <script>
+                // Select elements
+                const igloo = document.getElementById('igloo');
+                const freezeOverlay = document.getElementById('freeze-overlay');
+                const whatHappenedButton = document.getElementById('what-happened-button');
+                const explanationOverlay = document.getElementById('explanation-overlay');
+                const typewriter = document.getElementById('typewriter');
+                const closeOverlay = document.getElementById('close-overlay');
+        
+                // Freeze Screen Event
+                igloo.addEventListener('click', () => {
+                    freezeOverlay.classList.add('freeze-active');
+                    document.body.style.overflow = 'hidden';
+                });
+        
+                // Show Explanation
+                whatHappenedButton.addEventListener('click', () => {
+                    explanationOverlay.classList.add('explanation-active');
+                    freezeOverlay.classList.remove('freeze-active');
+                    typewriterText();
+                });
+        
+                // Close Explanation Overlay
+                closeOverlay.addEventListener('click', () => {
+                    explanationOverlay.classList.remove('explanation-active');
+                    document.body.style.overflow = 'auto'; // Enable scrolling again
+                });
+        
+                // Typewriter Effect
+                const text = `Hi there! Generative AI is a powerful tool, but it can sometimes make it easy to plagiarise by copying existing ideas or texts without giving proper credit. Avoid plagiarism by:
+                
+        1. Use AI-generated content as inspiration, not a final product.
+        2. Always cross-check and verify the information provided by AI.
+        3. Rewrite and rephrase content in your own words.
+        4. Cite sources and give credit where it's due.
+        
+        Remember, be original and put on your thinking cap!`;
+        
+                function typewriterText() {
+                    let index = 0;
+                    typewriter.textContent = ''; // Clear previous text
+                    const interval = setInterval(() => {
+                        if (index < text.length) {
+                            typewriter.textContent += text.charAt(index);
+                            index++;
+                        } else {
+                            clearInterval(interval);
+                        }
+                    }, 50); // Adjust typing speed here (50ms per character)
+                }
+            </script>
+        </body>
+        <!-- Back button -->
+        <a href="comic.html" class="back-button">Back to First Page</a>
+
+    <!-- Next button -->
+    <a href="comic strip 4.html" class="next-button">Next</a>
+        
+        <div class="comic-strip">
+            <a href="page1.html" class="comic-box box-1"></a>
+            <a href="page2.html" class="comic-box box-2"></a>
+            <a href="page3.html" class="comic-box box-3"></a>
+        </div>
+        </html>
+        

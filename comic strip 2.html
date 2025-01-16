@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://fmscmd.com/xdlab/imda/iframe-template.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+        <!-- change the title accordingly-->
+        <title>ashley's intdes website</title>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic Strip 2 - AI in Daily Life</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightgray;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #283953;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button:hover {
+            background-color: pink;
+        }
+
+        .ice-blocks {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 90%;
+            max-width: 900px;
+        }
+
+        .ice-block {
+            position: relative;
+            width: 100%;
+            height: 200px; /* Keep fixed height */
+            background: #d9f2fa; /* Ice-like color */
+            border: 2px solid #a4d3e4;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden; /* Prevent expansion */
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .ice-block:hover {
+            transform: scale(1.05);
+        }
+
+        .ice-block span {
+            font-size: 18px;
+            color: #283953;
+            font-weight: bold;
+            z-index: 2; /* Ensure the "Click to reveal" text stays on top */
+        }
+
+        .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: white;
+            color: #283953;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1; /* Content behind the "Click to reveal" */
+            overflow: hidden; /* Prevent content from overflowing */
+            text-align: center;
+        }
+
+        .next-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #283953;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .next-button:hover {
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back button -->
+    <a href="comic.html" class="back-button">Back to First Page</a>
+
+    <h1 style="color: #283953; text-align: center;">How AI Helps in Our Daily Lives</h1>
+    <div class="ice-blocks">
+        <!-- Ice Block 1 -->
+        <div class="ice-block" id="block1">
+            <span>Click to reveal!</span>
+            <div class="content">
+                AI can help <strong>write essays, poetry, and creative content</strong>. Tools like ChatGPT or Jasper make this easy and efficient!
+            </div>
+        </div>
+
+        <!-- Ice Block 2 -->
+        <div class="ice-block" id="block2">
+            <span>Click to reveal!</span>
+            <div class="content">
+                AI is great for <strong>generating images and videos</strong>. Apps like DALL·E and Runway can bring ideas to life visually.
+            </div>
+        </div>
+
+        <!-- Ice Block 3 -->
+        <div class="ice-block" id="block3">
+            <span>Click to reveal!</span>
+            <div class="content">
+                AI can create <strong>deepfake videos</strong>, blending faces and voices to mimic people. Be careful about ethical use!
+            </div>
+        </div>
+    </div>
+
+    <!-- Next button -->
+    <a href="comic strip 3.html" class="next-button">Next</a>
+
+    <script>
+        // Function to handle ice block click
+        function revealContent(blockId) {
+            const block = document.getElementById(blockId);
+            const content = block.querySelector('.content');
+            const span = block.querySelector('span');
+            
+            // Hide the ice block and reveal content
+            span.style.opacity = '0';
+            content.style.opacity = '1';
+            content.style.pointerEvents = 'auto';
+        }
+
+        // Attach click events to each block
+        document.getElementById('block1').addEventListener('click', () => revealContent('block1'));
+        document.getElementById('block2').addEventListener('click', () => revealContent('block2'));
+        document.getElementById('block3').addEventListener('click', () => revealContent('block3'));
+    </script>
+</body>
+</html>

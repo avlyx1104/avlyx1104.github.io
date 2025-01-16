@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Quiz</title>
+    <style>
+        body {
+            font-family: zt bros oskon 90s, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #283953;
+        }
+        .container {
+            width: 960px;
+            height: 540px;
+            aspect-ratio: 16 / 9;
+            background-color: #F4EBDC;
+            padding: 20px;
+            border: none;
+            border-radius: 20px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column; 
+            justify-content: flex-start; /* Move title closer to the top */
+            align-items: center;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 20px; /* Add some space below the title */
+        }
+        img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .question {
+            display: none;
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 120px;
+        }
+        .question.active {
+            display: block;
+        }
+        .question label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        .result {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .progress-bar {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 20px; 
+            background-color: #ddd;
+            border-radius: 15px; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+            overflow: hidden;
+        }
+        .progress-bar-inner {
+            height: 100%;
+            width: 0%;
+            background-color: #4CAF50; 
+            transition: width 0.3s ease-in-out;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>General Knowledge Quiz</h1> 
+
+    <form id="quizForm">
+        <div class="question active" id="question1"> 
+            <label>1. What is the capital of France?</label>
+            <input type="radio" name="q1" value="Paris"> Paris<br>
+            <input type="radio" name="q1" value="Berlin"> Berlin<br>
+            <input type="radio" name="q1" value="Madrid"> Madrid<br>
+            <input type="radio" name="q1" value="Rome"> Rome<br>
+            <button type="button" class="btn" onclick="checkAnswer(1)">Next</button>
+            <div class="result" id="result1"></div>
+        </div>
+
+        <div class="question" id="question2">
+            <label>2. Who wrote the play 'Romeo and Juliet'?</label>
+            <input type="radio" name="q2" value="Shakespeare"> William Shakespeare<br>
+            <input type="radio" name="q2" value="Dickens"> Charles Dickens<br>
+            <input type="radio" name="q2" value="Hemingway"> Ernest Hemingway<br>
+            <input type="radio" name="q2" value="Fitzgerald"> F. Scott Fitzgerald<br>
+            <button type="button" class="btn" onclick="checkAnswer(2)">Next</button>
+            <div class="result" id="result2"></div>
+        </div>
+
+        <div class="question" id="question3">
+            <label>3. What is the largest planet in our solar system?</label>
+            <input type="radio" name="q3" value="Jupiter"> Jupiter<br>
+            <input type="radio" name="q3" value="Saturn"> Saturn<br>
+            <input type="radio" name="q3" value="Earth"> Earth<br>
+            <input type="radio" name="q3" value="Mars"> Mars<br>
+            <button type="button" class="btn" onclick="checkAnswer(3)">Next</button>
+            <div class="result" id="result3"></div>
+        </div>
+    </form>
+
+    <div class="progress-bar">
+        <div class="progress-bar-inner" id="progressBar"></div>
+    </div>
+</div>
+
+<script>
+    const correctAnswers = {
+        q1: "Paris",
+        q2: "Shakespeare",
+        q3: "Jupiter"
+    };
+
+    let currentQuestion = 1;
+    const totalQuestions = 3;
+
+    function checkAnswer(questionNumber) {
+        const selectedAnswer = document.querySelector(`input[name="q${questionNumber}"]:checked`);
+
+        if (!selectedAnswer) {
+            alert('Please select an answer before proceeding.');
+            return;
+        }
+
+        const isCorrect = selectedAnswer.value === correctAnswers[`q${questionNumber}`];
+        const resultElement = document.getElementById(`result${questionNumber}`);
+
+        if (isCorrect) {
+            resultElement.innerHTML = 'Correct! Moving on to the next question...';
+            resultElement.style.color = 'green';
+            setTimeout(() => {
+                showNextQuestion(questionNumber);
+            }, 2000);
+        } else {
+            resultElement.innerHTML = 'Incorrect! Please try again.';
+            resultElement.style.color = 'red';
+        }
+    }
+
+    function showNextQuestion(currentQuestionNumber) {
+        document.getElementById(`question${currentQuestionNumber}`).classList.remove('active');
+        currentQuestionNumber++;
+
+        if (currentQuestionNumber <= totalQuestions) {
+            document.getElementById(`question${currentQuestionNumber}`).classList.add('active');
+            updateProgressBar(currentQuestionNumber);
+        } else {
+            alert('Congratulations! You have completed the quiz.');
+        }
+    }
+
+    function updateProgressBar(questionNumber) {
+        const progressBar = document.getElementById('progressBar');
+        const progress = (questionNumber / totalQuestions) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+</script>
+
+</body>
+</html>

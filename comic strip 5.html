@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comic Strip 5 - The AI Penguins</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #e8f5ff; /* Light ice blue background */
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #283953;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: pink;
+        }
+
+        .penguin-container {
+            display: flex;
+            justify-content: space-between;
+            width: 70%;
+            max-width: 800px;
+        }
+
+        .penguin {
+            width: 200px;
+            height: 300px;
+            cursor: pointer;
+            position: relative;
+            margin: 0 10px;
+        }
+
+        .penguin img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .explanation {
+            display: none; /* Initially hidden */
+            width: 250px;
+            height: 150px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            color: #283953;
+            font-size: 14px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #explanation1 {
+            left: 250px; /* Positioned next to the first penguin */
+        }
+
+        #explanation2 {
+            left: 250px; /* Positioned next to the second penguin */
+        }
+
+        /* Spin animation for penguins */
+        .spin {
+            animation: spin 1s ease-in-out;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .next-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #283953;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .next-button:hover {
+            background-color: pink;
+        }
+
+    </style>
+</head>
+<body>
+
+    <a href="comic.html" class="back-button">Back</a>
+
+    <div class="penguin-container">
+        <!-- Penguin 1 (ChatGPT) -->
+        <div class="penguin" id="penguin1" onclick="showExplanation('penguin1', 'explanation1')">
+            <img src="chat penguin.jpg" alt="ChatGPT Penguin">
+        </div>
+
+        <!-- Penguin 2 (Gemini) -->
+        <div class="penguin" id="penguin2" onclick="showExplanation('penguin2', 'explanation2')">
+            <img src="gemini penguin.jpg" alt="Gemini Penguin">
+        </div>
+    </div>
+
+    <!-- Explanation Boxes -->
+    <div id="explanation1" class="explanation">
+        <h3>ChatGPT</h3>
+        <p><strong>Key Difference 1:</strong> ChatGPT excels at casual dialogues and creative writing.</p>
+        <p><strong>Key Difference 2:</strong> It's great for general tasks like answering questions and brainstorming.</p>
+    </div>
+
+    <div id="explanation2" class="explanation">
+        <h3>Gemini</h3>
+        <p><strong>Key Difference 1:</strong> Gemini is better for structured tasks like summarization and academic writing.</p>
+        <p><strong>Key Difference 2:</strong> It specializes in technical fields and precise information generation.</p>
+    </div>
+
+    <!-- Next button -->
+    <a href="questions 2.html" class="next-button">Next</a>
+
+    <script>
+        // Function to handle penguin click: spin and show the explanation
+        function showExplanation(penguinId, explanationId) {
+            const penguinElement = document.getElementById(penguinId);
+            const penguinImage = penguinElement.querySelector('img');
+            const explanationElement = document.getElementById(explanationId);
+            
+            // Add the spin animation to the penguin image
+            penguinImage.classList.add('spin');
+            
+            // Wait for the spin animation to finish before displaying the explanation
+            penguinImage.addEventListener('animationend', function() {
+                penguinImage.style.display = 'none'; // Hide the penguin image after spin
+                explanationElement.style.display = 'block'; // Show the explanation box
+            }, { once: true });
+        }
+    </script>
+
+</body>
+</html>

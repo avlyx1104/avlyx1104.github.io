@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCQ Quiz</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-image: url(earthbg.png);
+      background-size: cover;
+      background-position: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    /* Cover Page */
+    #cover-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-color: lightskyblue;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+
+    #cover-page img {
+      width: 250px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    #cover-page h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    #cover-page p {
+      font-size: 1.5em;
+      margin-bottom: 30px;
+    }
+
+    .start-button {
+      padding: 15px 30px;
+      font-size: 1.5em;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .start-button:hover {
+      background-color: #388e3c;
+    }
+
+    /* Quiz Container */
+    #quiz-container {
+      width: 960px;
+      height: 540px;
+      background: lightskyblue;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      text-align: center;
+      display: none; /* Initially hidden */
+    }
+
+    #progress-bar {
+      width: 100%;
+      height: 20px;
+      background: #ddd;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #progress {
+      height: 100%;
+      background: #4caf50;
+      transition: width 0.3s;
+      position: relative;
+    }
+
+    #progress-icon {
+      position: absolute;
+      top: -10px;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      background-image: url();
+      background-size: cover;
+      transition: left 0.3s;
+    }
+
+    .question {
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+
+    .options button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      cursor: pointer;
+      background-color: rgba(42, 42, 42, 0.8);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .options button:hover {
+      background-color: #cd5ad1;
+    }
+
+    .options button.correct {
+      background-color: #4caf50;
+    }
+
+    .options button.incorrect {
+      background-color: #f44336;
+    }
+
+    #comment {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+
+    #score {
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+
+    #gif-container {
+      margin-top: 20px;
+    }
+
+    #gif-container img {
+      width: 300px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    #retry-button, #proceed-button {
+      display: none;
+      margin: 20px auto 0;
+      padding: 10px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #retry-button {
+      background-color: #f44336;
+      color: white;
+    }
+
+    #retry-button:hover {
+      background-color: #d32f2f;
+    }
+
+    #proceed-button {
+      background-color: #79c97b;
+      color: white;
+    }
+
+    #proceed-button:hover {
+      background-color: #388e3c;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Cover Page -->
+  <div id="cover-page">
+    <img src="bearbear.png" alt="Polar Bear">
+    <h1>Ready for a Quiz?</h1>
+    <p>Test your knowledge about AI!</p>
+    <button class="start-button" onclick="startQuiz()">Yes, Let's Start!</button>
+  </div>
+
+  <!-- Quiz Container (Hidden initially) -->
+  <div id="quiz-container">
+    <div id="progress-bar">
+      <div id="progress">
+        <div id="progress-icon"></div>
+      </div>
+    </div>
+    <div id="quiz">
+      <p id="question-number">Question 1/5</p>
+      <p class="question"></p>
+      <div class="options"></div>
+      <div id="comment"></div>
+    </div>
+    <div id="score" style="display: none;">
+      <p>You scored <span id="score-value"></span> out of <span id="total-questions"></span>!</p>
+      <div id="gif-container">
+        <img src="giphy.gif" alt="Celebratory GIF">
+      </div>
+      <button id="retry-button" onclick="retryQuiz()">Retry Quiz</button>
+      <button id="proceed-button" onclick="proceedToNextPage()">Proceed</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "What is Artificial Intelligence (AI)?",
+        options: [
+          "A type of machine used in manufacturing.",
+          "The science of teaching machines to mimic intelligent human behaviour.",
+          "A tool that only processes large amounts of data.",
+          "A system that only calculates numbers."
+        ],
+        answer: 1,
+        comment: "Artificial Intelligence will never outsmart humans though ;)"
+      },
+      {
+        question: "Which of the following is NOT a use case of Generative AI?",
+        options: [
+          "Writing essays and poetry.",
+          "Generating images and music.",
+          "Creating deepfake videos.",
+          "Predicting the weather."
+        ],
+        answer: 3,
+        comment: "Weather has moodswings... Kidding. AI doesn't have the ability to do that."
+      },
+      {
+        question: "What should you do to verify the accuracy of Gen AI-generated content?",
+        options: [
+          "Use multiple credible sources to cross-check information",
+          "Accept it as true without verification.",
+          "Avoid fact-checking since Gen AI tools are always accurate.",
+          "Trust only the content from unknown websites."
+        ],
+        answer: 0,
+        comment: "Be careful and be wary!"
+      },
+      {
+        question: "Which of these is a good prompt for AI?",
+        options: [
+          "Tell me about climate change.",
+          "Give me 3 specific examples on how renewable energy can reduce greenhouse gas emissions. ",
+        ],
+        answer: 1,
+        comment: "Be descriptive!"
+      },
+      {
+        question: "What kind of content can users create using Generative AI chatbots like ChatGPT?",
+        options: [
+          "Mechanical devices",
+          "Encrypted passwords",
+          "Poems and other written content",
+          "Virtual reality simulations"
+        ],
+        answer: 2,
+        comment: "Users can create poems and other written content using Generative AI chatbots!"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function startQuiz() {
+      // Hide the cover page
+      document.getElementById('cover-page').style.display = 'none';
+      // Show the quiz container
+      document.getElementById('quiz-container').style.display = 'block';
+      
+      loadQuestion();
+      updateProgressBar();
+    }
+
+    function loadQuestion() {
+      const question = questions[currentQuestion];
+      $("#question-number").text(`Question ${currentQuestion + 1}/${questions.length}`);
+      $(".question").text(question.question);
+      $(".options").empty();
+      question.options.forEach((option, index) => {
+        $(".options").append(`<button data-index="${index}">${option}</button>`);
+      });
+      $("#comment").text("");
+    }
+
+    function updateProgressBar() {
+      const progress = ((currentQuestion + 1) / questions.length) * 100;
+      $("#progress").css("width", `${progress}%`);
+      $("#progress-icon").css("left", `${progress}%`);
+    }
+
+    function retryQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      $("#quiz").show();
+      $("#score").hide();
+      $("#retry-button, #proceed-button").hide();
+      loadQuestion();
+      updateProgressBar();
+    }
+
+    function proceedToNextPage() {
+      window.location.href = 'comic.html';
+    }
+
+    $(document).ready(function () {
+      $(".options").on("click", "button", function () {
+        const selected = $(this).data("index");
+        const question = questions[currentQuestion];
+
+        if (selected === question.answer) {
+          $(this).addClass("correct");
+          score++;
+        } else {
+          $(this).addClass("incorrect");
+          $(`.options button[data-index='${question.answer}']`).addClass("correct");
+        }
+
+        $("#comment").text(question.comment);
+        setTimeout(() => {
+          currentQuestion++;
+          if (currentQuestion < questions.length) {
+            loadQuestion();
+            updateProgressBar();
+          } else {
+            $("#quiz").hide();
+            $("#score").show();
+            $("#score-value").text(score);
+            $("#total-questions").text(questions.length);
+
+            if (score >= 4) {
+              $("#proceed-button").show();
+            } else {
+              $("#retry-button").show();
+            }
+          }
+        }, 2000);
+      });
+    });
+  </script>
+
+</body>
+
+</html>
